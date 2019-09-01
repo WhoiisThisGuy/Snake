@@ -1,24 +1,13 @@
-#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "Game.h"
 
-template<typename T>
-class Base{
-	
-public:
-	Base(T a) : urmom(a){
-		
-		std::cout<<"Base class"<<std::endl;
-		
-		}
-	T urmom;
-	};
-
-void semmi(){
-	
-	
-}
-
-int main(int argc, char **argv)
+int main()
 {
-	Base<int> b(2);
-	
+	srand(time(NULL));
+
+	Game game;
+
+	game.run();
+
+	return 0;
 }
