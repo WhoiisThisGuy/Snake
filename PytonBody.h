@@ -1,7 +1,4 @@
-#pragma once
 #include "SFML/Graphics.hpp"
-#include "PytonHead.h"
-#include <memory>
 
 class PytonBody
 	
@@ -11,14 +8,13 @@ public:
 
 	PytonBody(const sf::Vector2i& tempDir, const sf::Vector2f& prevElemPosition);
 	
-	void Update(std::shared_ptr<PytonBody> & previousElem);
-
-	void Update(PytonHead*& head);
+	void Update(sf::Vector2i previousElemDirection,sf::Vector2f previousElemPosition);
 	
 	void Draw(sf::RenderWindow& window);
 	const sf::Vector2i getDirection() const { return Direction; }
 	const sf::Vector2f getPosition() const { return bodyShape.getPosition(); }
 	const sf::Vector2f getChangedDirectionPosition() const { return changedDirectionPosition; }
+	const sf::RectangleShape getBodyShape() const { return bodyShape; }
 
 private: //functions 
 
@@ -32,4 +28,3 @@ private: // variables
 	sf::Vector2i Direction;
 	float speed;
 };
-

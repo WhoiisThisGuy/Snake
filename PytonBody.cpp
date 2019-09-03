@@ -2,45 +2,28 @@
 
 PytonBody::PytonBody(const sf::Vector2i& tempDir,const sf::Vector2f& prevElemPosition)
 	 : Direction(tempDir),
-	speed(2.0f)
+	speed(6.0f)
 
 {
 	initBody(tempDir, prevElemPosition);
 }
 
-void PytonBody::Update(std::shared_ptr<PytonBody>& previousElem)
+void PytonBody::Update(sf::Vector2i previousElemDirection,sf::Vector2f previousElemPosition)
 {
 
-	if (bodyShape.getPosition().x == previousElem->getPosition().x) {
+	if (bodyShape.getPosition().x == previousElemPosition.x) {
 
-		Direction = previousElem->getDirection();
-
-	}
-	else if (bodyShape.getPosition().y == previousElem->getPosition().y) {
-
-		Direction = previousElem->getDirection();
+		Direction = previousElemDirection;
 
 	}
+	else if (bodyShape.getPosition().y == previousElemPosition.y) {
 
-	bodyShape.move(Direction.x * speed * 3, Direction.y * speed * 3);
-}
-
-void PytonBody::Update(PytonHead*& head)
-{
-
-	if (bodyShape.getPosition().x == head->getPosition().x) {
-
-		Direction = head->getDirection();
-
-	}
-	else if (bodyShape.getPosition().y == head->getPosition().y) {
-
-		Direction = head->getDirection();
+		Direction = previousElemDirection;
 
 	}
 
-	bodyShape.move(Direction.x * speed * 3, Direction.y * speed * 3);
-
+	bodyShape.move(Direction.x * speed, Direction.y * speed);
+	
 }
 
 void PytonBody::Draw(sf::RenderWindow& window)

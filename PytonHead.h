@@ -1,6 +1,5 @@
-#pragma once
 #include "SFML/Graphics.hpp"
-#include <iostream>
+
 
 class PytonHead
 {
@@ -17,23 +16,27 @@ public:
 
 	const sf::RectangleShape& getPytonHeadShape() const { return pyton; }
 
-	//const sf::Vector2f& getChangedDirectionPosition() const { return ChangedDirectionPosition; }
-
 	const sf::Vector2i& getprevDirection() const { return prevDirection; }
 
+	const bool isTheGameOver() const { return isItOver; }
+
 private:
 
+	bool fruitCollisionCheck();
 	void InitSnake();
-
+	bool DoIleaveTheMap();
+	void Controller();
+	bool CanIchangeDirection();
+	
 private:
+	
 
+	
 	sf::Clock changedDirTime;
 	sf::Vector2i prevDirection;
 	sf::Vector2f ChangedDirectionPosition;
 	sf::RectangleShape pyton;
 	sf::Vector2i Direction;
 	float speed;
-	
-
+	bool isItOver;
 };
-

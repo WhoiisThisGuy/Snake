@@ -1,9 +1,8 @@
-#pragma once
 #include <SFML/Graphics.hpp>
-#include "Pyton.h"
 #include <iostream>
 #include <exception>
-
+#include "Pyton.h"
+#include "Fruit.h"
 
 class Game {
 
@@ -21,11 +20,14 @@ public:
 
 private:
 
-	Pyton* py;
-	
+	void Restart();
 
+private:
+
+	std::shared_ptr<Pyton> py;
+	bool GameOver;
 	sf::RenderWindow window;
 	sf::Event event;
-
 	Fruit fruit;
+	
 };

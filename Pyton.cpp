@@ -1,6 +1,7 @@
 #include "Pyton.h"
 
-Pyton::Pyton()
+Pyton::Pyton() :
+	EndGame(false)
 {
 	head = new PytonHead();
 	addNewBody();
@@ -30,23 +31,54 @@ void Pyton::Draw(sf::RenderWindow& window)
 void Pyton::Update(Fruit& fruit)
 {
 	head->Update();
+	if(head->isTheGameOver()) // || CheckBodyCollision() collisiont csekkolni
+		EndGame = true;
 
-	for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(), prev; it != pytonBody.end(); prev = it, ++it) {
+	if(!EndGame){
+		
+		if (fruitCollisionCheck(fruit)) {
+		
+			fruit.setNewPosition();
+			addNewBody();
+		}
+		
+		for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(), prev; it != pytonBody.end(); prev = it, ++it) {
 
-		if (it != pytonBody.begin()) //furcsa logika
-			(*it)->Update(*prev);
-		else {
-			(*it)->Update(head);
+			if (it != pytonBody.begin()) //furcsa logika
+				(*it)->Update((*prev)->getDirection(),(*prev)->getPosition());
+			else {
+				(*it)->Update(head->getDirection(),head->getPosition());
+				
+				}
 		}
 	}
-
-	if (fruitCollisionCheck(fruit)) {
-	
-		fruit.setNewPosition();
-		addNewBody();
-	}
-		
 }
+
+bool Pyton::CheckBodyCollision(){
+	
+	int i = 0;
+	
+	float top,left,height,width;
+	
+	top = head->getPytonHeadShape().getGlobalBounds().top;
+	left = head->getPytonHeadShape().getGlobalBounds().left;
+	height = head->getPytonHeadShape().getGlobalBounds().height;
+	width = head->getPytonHeadShape().getGlobalBounds().width;
+	
+	sf::Rect<float> headRect(top,left,width,height);
+	
+	//only check from the 4th, no way you get into the 2nd , 3rd bodyelement.
+		for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(), prev; it != pytonBody.end(); prev = it, ++it,++i) {
+
+			if (i>2 && (*it)->getBodyShape().getGlobalBounds().intersects(headRect)){
+				
+				return true;
+			}
+		}
+		
+	return false;
+}
+	
 
 void Pyton::addNewBody()
 {

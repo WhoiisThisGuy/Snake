@@ -2,9 +2,14 @@
 #include <fstream>
 
 Game::Game()
-try : window(sf::VideoMode(950.0f, 750.0f), "Snake"), py(new Pyton()){
-	
-	window.setFramerateLimit(60);
+try 
+: window(sf::VideoMode(750.0f, 550.0f), "Snake"),
+
+GameOver(false)
+
+{
+	py = std::make_shared<Pyton>();
+	window.setFramerateLimit(70);
 }
 catch (std::exception e) {
 
@@ -14,8 +19,6 @@ catch (std::exception e) {
 
 Game::~Game()
 {
-
-	delete py;
 	
 }
 
@@ -24,7 +27,6 @@ void Game::run()
 	
 	while (window.isOpen())
 	{
-		
 		Update();
 		Render();
 	}
@@ -33,8 +35,12 @@ void Game::run()
 
 void Game::Update()
 {
+	//Check for game over
 	UpdateSfmlEvents();
-	py->Update(fruit);
+	if(!(py->ShallIendTheGame())){
+		py->Update(fruit);
+	}
+
 }
 
 void Game::UpdateSfmlEvents()
@@ -42,12 +48,12 @@ void Game::UpdateSfmlEvents()
 	
 	while (window.pollEvent(event))
 	{
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			window.close();
 		if (event.type == sf::Event::Closed)
 			window.close();
-
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+			Restart();
 	}
 
 }
@@ -62,4 +68,9 @@ void Game::Render()
 	
 }
 
+void Game::Restart(){
+
+		py.reset(new Pyton());
+		GameOver = false;
+	}
 
