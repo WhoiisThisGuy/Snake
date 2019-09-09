@@ -8,6 +8,7 @@ try
 GameOver(false)
 
 {
+
 	py = std::make_shared<Pyton>();
 	window.setFramerateLimit(70);
 }
@@ -62,8 +63,10 @@ void Game::Render()
 {
 		
 		window.clear();
+		testGate.Draw(window);
 		py->Draw(window);
 		fruit.Draw(window);
+		
 		window.display();
 	
 }

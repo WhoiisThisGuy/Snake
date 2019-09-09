@@ -6,6 +6,7 @@ Pyton::Pyton() :
 	head = new PytonHead();
 	addNewBody();
 	addNewBody();
+	addNewBody();
 }
 
 Pyton::~Pyton()
@@ -28,35 +29,40 @@ void Pyton::Draw(sf::RenderWindow& window)
 	}
 }
 
-void Pyton::Update(Fruit& fruit)
+void Pyton::Update(Fruits& fruit)
 {
 	head->Update();
-	if(head->isTheGameOver()) // || CheckBodyCollision() collisiont csekkolni
+	if(head->isTheGameOver() || CheckBodyCollision())
 		EndGame = true;
 
-	if(!EndGame){
+	//if(!EndGame){ //If I do this it will look dumb when you run into urself. check it if you want to.
 		
 		if (fruitCollisionCheck(fruit)) {
 		
 			fruit.setNewPosition();
 			addNewBody();
+			addNewBody();
+			addNewBody();
+			addNewBody();
+			addNewBody();
+			addNewBody();
 		}
 		
 		for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(), prev; it != pytonBody.end(); prev = it, ++it) {
 
-			if (it != pytonBody.begin()) //furcsa logika
+			if (it != pytonBody.begin()) //furcsa logika, valami olvashatóbbat kitalálni
 				(*it)->Update((*prev)->getDirection(),(*prev)->getPosition());
 			else {
 				(*it)->Update(head->getDirection(),head->getPosition());
 				
 				}
 		}
-	}
+	//}
 }
 
 bool Pyton::CheckBodyCollision(){
 	
-	int i = 0;
+	int i = 0; //i is for to check only from 4th element (from 3rd 0-1-2-3) [head][0][1][2][3][checkfromhere]
 	
 	float top,left,height,width;
 	
@@ -65,10 +71,10 @@ bool Pyton::CheckBodyCollision(){
 	height = head->getPytonHeadShape().getGlobalBounds().height;
 	width = head->getPytonHeadShape().getGlobalBounds().width;
 	
-	sf::Rect<float> headRect(top,left,width,height);
+	sf::Rect<float> headRect(left,top,width,height);
 	
 	//only check from the 4th, no way you get into the 2nd , 3rd bodyelement.
-		for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(), prev; it != pytonBody.end(); prev = it, ++it,++i) {
+		for (std::list<std::shared_ptr<PytonBody>>::iterator it = pytonBody.begin(); it != pytonBody.end(); ++it,++i) {
 
 			if (i>2 && (*it)->getBodyShape().getGlobalBounds().intersects(headRect)){
 				
@@ -95,7 +101,7 @@ void Pyton::addNewBody()
 
 }
 
-bool Pyton::fruitCollisionCheck(Fruit& fruit)
+bool Pyton::fruitCollisionCheck(Fruits& fruit)
 {
 		float RectX, RectY, RectWidth, RectHeight, NearestX, NearestY, DeltaX, DeltaY, CircleX, CircleY;
 

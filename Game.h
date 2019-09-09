@@ -2,7 +2,8 @@
 #include <iostream>
 #include <exception>
 #include "Pyton.h"
-#include "Fruit.h"
+#include "Fruits.h"
+#include "Gate.h"
 
 class Game {
 
@@ -28,6 +29,6 @@ private:
 	bool GameOver;
 	sf::RenderWindow window;
 	sf::Event event;
-	Fruit fruit;
-	
+	Fruits fruit;
+	Gate testGate;
 };

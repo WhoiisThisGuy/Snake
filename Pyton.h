@@ -3,7 +3,7 @@
 #include <memory>
 #include "PytonHead.h"
 #include "PytonBody.h"
-#include "Fruit.h"
+#include "Fruits.h"
 
 class Pyton
 {
@@ -15,9 +15,9 @@ public:
 	~Pyton();
 
 	void Draw(sf::RenderWindow& window);
-	void Update(Fruit& fruit);
+	void Update(Fruits& fruit);
 	void addNewBody();
-	bool fruitCollisionCheck(Fruit& fruit);
+	bool fruitCollisionCheck(Fruits& fruit);
 	bool ShallIendTheGame(){ return EndGame; }
 	bool CheckBodyCollision();
 	

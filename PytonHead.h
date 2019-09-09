@@ -1,5 +1,6 @@
 #include "SFML/Graphics.hpp"
-
+#include <iostream>
+#include <stdlib.h>
 
 class PytonHead
 {
@@ -12,9 +13,10 @@ public:
 	const sf::Vector2i& getDirection() const { return Direction; }
 	const sf::Vector2f& getPosition() const { return pyton.getPosition(); }
 
-	const sf::Vector2f& getChangedDirectionPosition() const { return ChangedDirectionPosition; }
+	const sf::Vector2f& getChangedDirectionPosition() const;
 
 	const sf::RectangleShape& getPytonHeadShape() const { return pyton; }
+	const sf::FloatRect getPytonRect() const { return pyton.getGlobalBounds(); }
 
 	const sf::Vector2i& getprevDirection() const { return prevDirection; }
 
@@ -31,7 +33,7 @@ private:
 private:
 	
 
-	
+	sf::Texture headTexture;
 	sf::Clock changedDirTime;
 	sf::Vector2i prevDirection;
 	sf::Vector2f ChangedDirectionPosition;
